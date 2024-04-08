@@ -1,127 +1,81 @@
-RSA Factoring Challenge
+# RSA-Factoring-Challenge
 
-    By Nderitu
+## Prime Factors Challenge
 
-Background Context
+This project was created to address a coding challenge which involves finding the prime factors of large numbers. The primary goal was to identify the two prime factors of a given integer as efficiently as possible. The application takes an input file containing numbers and outputs each number with its corresponding prime factors.
 
-Before you continue reading, start this song in the background :)
+### Problem Statement
 
-We have sniffed an unsecured network and found numbers that are used to encrypt very important documents. It seems that those numbers are not always generated using large enough prime numbers. Your mission should you choose to accept it, is to factorize these numbers as fast as possible before the target fixes this bug on their server - so that we can decode the encrypted documents.
+The main task is to find the two prime factors of a given number `n`, which is always the product of two prime numbers. The challenge was not only to implement the solution but to optimize it as well, aiming for a computation time of less than 5 seconds for very large numbers.
 
-This project is NOT mandatory at all. It is 100% optional. Doing any part of this project will add a project grade of over 100% to your average. Your score won't get hurt if you don't do it, but if your current average is greater than your score on this project, your average might go down. Have fun!\
-Resources
+### Approach and Implementation
 
-Read or watch:
+Initially, a simple implementation was used. This naive approach involved dividing the number by all integers up to its square root to find its factors. However, this approach was not efficient for very large numbers as the time complexity of this algorithm is ![O(sqrt(n)) Complexity](https://quicklatex.com/cache3/54/ql_6c7da21f9cd77eb4002dbe7fceda9654_l3.png), which becomes very time-consuming as n grows larger.
 
-    RSA\
-    How does HTTPS provide security?\
-    Prime Factorization
+An optimization was introduced to the initial approach, where the number was divided only by 2 and odd numbers up to its square root. This improved the efficiency somewhat, but it was still not enough for the largest numbers.
 
-Requirements\
-General
+Ultimately, a more efficient approach was considered, utilizing Pollard's Rho Algorithm, which is a probabilistic factorisation method. This method is generally faster than the brute force approach for larger numbers. However, the trade-off is that it might not always find a factor even though one exists. In such cases, we keep trying with different random numbers until we succeed.
 
-    You can choose the language of your choice.\
-    OS needs to be Standard Ubuntu 20.04 LTS/
+### Conclusion
 
-Tasks\
-0\. Factorize all the things!\
-#advanced
+Factoring large numbers is a challenging task, even for modern computers. The time it takes to factor a number increases exponentially with the size of the number. As such, while the solution implemented here works for numbers of a reasonable size, it still struggles with extremely large numbers due to the inherent difficulty of the problem.
 
-Factorize as many numbers as possible into a product of two smaller numbers.
+Further improvements could potentially be made using more complex factorization algorithms or probabilistic methods, using dedicated factoring libraries or tools, or by parallelizing the process. However, each of these options introduces its own trade-offs in terms of added complexity, hardware requirements, or potential inaccuracies.
 
-    Usage: factors <file>\
-        where <file> is a file containing natural numbers to factor.\
-        One number per line\
-        You can assume that all lines will be valid natural numbers greater than 1\
-        You can assume that there will be no empy line, and no space before and after the valid number\
-        The file will always end with a new line\
-    Output format: n=p*q\
-        one factorization per line\
-        p and q don't have to be prime numbers\
-        See example\
-    You can work on the numbers of the file in the order of your choice\
-    Your program should run without any dependency: You will not be able to install anything on the machine we will run your program on\
-    Time limit: Your program will be killed after 5 seconds if it hasn't finish\
-    Push all your scripts, source code, etc... to your repository\
-        we will only run your executable factors
+### Usage
 
-julien@ubuntu:~/factors$ cat tests/test00\
-4\
-12\
-34\
-128\
-1024\
-4958\
-1718944270642558716715\
-9\
-99\
-999\
-9999\
-9797973\
-49\
-239809320265259\
-julien@ubuntu:~/factors$ time ./factors tests/test00\
-4=2*2\
-12=6*2\
-34=17*2\
-128=64*2\
-1024=512*2\
-4958=2479*2\
-1718944270642558716715=343788854128511743343*5\
-9=3*3\
-99=33*3\
-999=333*3\
-9999=3333*3\
-9797973=3265991*3\
-49=7*7\
-239809320265259=15485783*15485773
+To run the program:
 
-real    0m0.009s\
-user    0m0.008s\
-sys 0m0.001s\
-julien@ubuntu:~/factors$
+```
+python3 factors inputfile.txt
+```
 
-Repo:
+This will output each number in the input file along with its prime factors in the format:
 
-    GitHub repository: RSA-Factoring-Challenge\
-    File: factors
+```
+n=p*q
+```
 
-1\. RSA Factoring Challenge\
-#advanced
+where `n` is the number from the input file, and `p` and `q` are its prime factors.
 
-RSA Laboratories states that: for each RSA number n, there exist prime numbers p and q such that
+### Testing
 
-n = p × q. The problem is to find these two primes, given only n.
+I have included a comprehensive set of tests in the `tests` directory to validate the functionality and performance of the solution. Each file contains numerous test cases that the program must correctly factor and output within the stipulated time constraint. Please feel free to run these tests to confirm the correctness and efficiency of the solution.
 
-This task is the same as task 0, except:
+---
 
-    p and q are always prime numbers\
-    There is only one number in the files
+## RSA Challenge
 
-How far can you go in less than 5 seconds?
+This challenge involves the RSA Factoring Challenge which is to find the two prime factors `p` and `q` of a number `n` given only `n`. This task is similar to the prime factors challenge, except `p` and `q` are always prime numbers and there is only one number in the files.
 
-    Read: RSA Factoring Challenge
+### Problem Statement
 
-julien@ubuntu:~/RSA Factoring Challenge$ cat tests/rsa-1\
-6\
-julien@ubuntu:~/RSA Factoring Challenge$ ./rsa tests/rsa-1\
-6=3*2\
-julien@ubuntu:~/RSA Factoring Challenge$ cat tests/rsa-2\
-77\
-julien@ubuntu:~/RSA Factoring Challenge$ ./rsa tests/rsa-2\
-77=11*7\
-julien@ubuntu:~/RSA Factoring Challenge$ [...]\
-julien@ubuntu:~/RSA Factoring Challenge$ cat tests/rsa-15\
-239821585064027\
-julien@ubuntu:~/RSA Factoring Challenge$ ./rsa tests/rsa-15\
-239821585064027=15486481*15485867\
-julien@ubuntu:~/RSA Factoring Challenge$ cat tests/rsa-16\
-2497885147362973\
-julien@ubuntu:~/RSA Factoring Challenge$ ./rsa tests/rsa-16\
-2497885147362973=49979141*49978553\
-julien@ubuntu:~/RSA Factoring Challenge$ [...]
+The main task is to find the two prime factors of a given number `n`, which is always the product of two prime numbers. The challenge was not only to implement the solution but to optimize it as well, aiming for a computation time of less than 5 seconds for very large numbers.
 
-Repo:
+### Approach and Implementation
 
-    GitHub repository: RSA-Factoring-Challenge\
-    File: rsa
+The approach I took to solve this challenge was similar to the prime factors challenge. The number was divided only by 2 and odd numbers up to its square root. If these numbers were factors, a prime check was also conducted. If the factors were prime, they were returned as the solution.
+
+### Conclusion
+
+This challenge further underscores the difficulty of factoring large numbers, especially when these numbers are the product of two prime numbers. While the solution I implemented here is able to successfully factor these RSA numbers within the stipulated time for numbers of a reasonable size, it struggles with extremely large numbers. This is an inherent challenge in the field of number theory and cryptography.
+
+### Usage
+
+To run the program:
+
+```
+python3 rsa inputfile.txt
+```
+
+This will output the number in the input file along with its prime factors in the format:
+
+```
+n=p*q
+```
+
+where `n` is the number from the input file, and `p` and `q` are its prime factors.
+
+### Testing
+
+Similar to the prime factors challenge, I have included a comprehensive set of tests in the `tests` directory to validate the functionality and performance of the solution for the RSA challenge. Each file contains a test case that the program must correctly factor and output within the stipulated time constraint. Please feel free to run these tests to confirm the correctness and efficiency of the solution.
